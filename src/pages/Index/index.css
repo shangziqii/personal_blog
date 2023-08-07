@@ -1,0 +1,68 @@
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+
+    .headerStyle {
+        height: 10vh;
+        /* padding: 50px; */
+        background-color: #73c6d2;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .contentStyle {
+        text-align: center;
+        min-height: 7.5rem;
+        /* line-height: 120px; */
+        height: 80vh;
+        background-color: rgb(198, 198, 198);
+    }
+
+    .siderStyle {
+        text-align: center;
+        height: 80vh;
+        background-color: red;
+    }
+
+    .footerStyle {
+        text-align: center;
+        height: 10vh;
+        background-color: #7dbcea;
+    }
+
+    .topStyle {
+        background-color: pink;
+    }
+
+    .right {
+        width: 37.5rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .searchInput {
+        margin-right: .625rem;
+    }
+
+    .loginBtnStyle {
+        color: rgb(241, 145, 19);
+    }
+
+    .leftStyle {
+        width: 15.625rem;
+        margin: 0 1.5625rem;
+        height: 100%;
+        background-color: pink;
+    }
+
+    .textStyle {
+        margin: 1.5625rem auto;
+        width: 95%;
+        height: 75vh;
+        min-height: 6.25rem;
+        overflow: hidden;
+        /* background-color: pink; */
+    }
