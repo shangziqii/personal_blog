@@ -321,7 +321,7 @@ module.exports = function (webpackEnv) {
         ...(modules.webpackAliases || {}),
 
         // 设置路径别名
-        '@': path.join(__dirname, '..', 'src'),
+        '@': path.resolve(__dirname, 'src')
 
       },
       plugins: [

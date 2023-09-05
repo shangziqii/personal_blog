@@ -1,0 +1,38 @@
+.bodyClass {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(68, 68, 68);
+    overflow: hidden;
+}
+
+#app {
+    width: 50vw;
+    height: 50vh;
+    margin: 25vh auto;
+    background-color: rgb(184, 184, 184);
+    // border: 10px transparent solid;
+    overflow: hidden;
+    min-width: 300px;
+    min-height: 200px;
+}
+
+#app .login-form {
+    width: 40vw;
+    height: 40vh;
+    min-width: 250px;
+    min-height: 150px;
+    margin: 5vh auto;
+    background-color: rgb(212, 212, 212);
+    border: 10px transparent solid;
+
+    .inputStyle {
+        width: 80%;
+        margin: 30px auto;
+    }
+
+    .login-form-button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}

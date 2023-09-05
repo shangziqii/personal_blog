@@ -1,59 +1,88 @@
-import { FormEvent, useState } from "react"
 import { loginForm } from './api'
 import React from 'react'
+import { Button, Form, Input } from 'antd'
+import { useNavigate } from "react-router-dom"
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
-interface LoginFormProps {
-    username: string;
-    password: string;
-    onusernameOnChange: (value: string) => void;
-    onpasswordOnChange: (value: string) => void;
-}
+import './index.scss'
 
-function LoginForm({ username, password, onusernameOnChange, onpasswordOnChange }: LoginFormProps) {
-    function submitForm(event: FormEvent) {
-        event.preventDefault();
+const Login: React.FC = () => {
+    // 点击登录处理函数
+    const navigate = useNavigate();
+    const onFinish = (values: any) => {
+        console.log('Received values of form: ', values);
         const data = {
-            username,
-            password,
-            role: 1
+            username: values.username,
+            password: values.password
         };
-        loginForm(data);
-    }
+        loginForm(data).then(({ data }) => {
+            if (data.status === 0) {
+                console.log("登陆成功！");
+                localStorage.setItem('token', data.token);
+                navigate("/home");
+            }
+            else {
+                console.log("用户名或密码错误！");
+                localStorage.setItem('token', '');
+            }
+        }).catch(() => {
+            console.log("未知错误，请稍后再试！");
 
+        })
+    };
     return (
-        <>
-            {/* <form action="http:127.0.0.1/api/login"> */}
-            <form onSubmit={submitForm}>
-                <span>账号：</span><input type="text" value={username} onChange={(e) => onusernameOnChange(e.target.value)} />
-                {/* <span>账号：</span><input type="text" /> */}
-                <br />
-                <span>密码：</span><input type="password" value={password} onChange={(e) => onpasswordOnChange(e.target.value)} />
-                {/* <span>密码：</span><input type="password" /> */}
-                <br />
-                {/* <input type="submit" /> */}
-                <button type="submit">提交表单信息</button>
-            </form>
-        </>
+
+        <Form
+            name="normal_login"
+            className="login-form"
+            onFinish={onFinish}
+        >
+
+            <Form.Item
+                name="username"
+                rules={[{ required: true, message: 'Please input your Username!' }]}
+                className='inputStyle'
+            >
+                <Input
+                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    placeholder="Username"
+                />
+            </Form.Item>
+
+            <Form.Item
+                name="password"
+                rules={[{ required: true, message: 'Please input your Password!' }]}
+                className='inputStyle'
+            >
+                <Input
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="Password"
+
+                />
+            </Form.Item>
+
+            <Form.Item className="login-form-button">
+                <Button type="primary" htmlType="submit" className='submit'>
+                    Log in
+                </Button>
+            </Form.Item>
+
+        </Form>
+    );
+};
+
+
+const App: React.FC = () => {
+    return (
+        <div className='bodyClass'>
+            <div id="app">
+                <Login />
+            </div>
+        </div>
     )
 }
 
-//类式组件
+export default App
 
-function Login() {
-    const [username, setusername] = useState('');
-    const [password, setpassword] = useState('');
-    return (
-        <>
-            {/* <div>登录，因为是个人博客，所以只有我本人可以登录</div> */}
-            {/* <div>登录成功后，将会显示一个按钮是个人空间（home）,在这里可以对自己博客文章的增删改查</div> */}
-            <LoginForm
-                username={username}
-                password={password}
-                onusernameOnChange={setusername}
-                onpasswordOnChange={setpassword}
-            />
-        </>
-    )
-}
 
-export default Login
