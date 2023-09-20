@@ -63,6 +63,8 @@ exports.getArticle = (req, res) => {
             })
         })
     }
+
+    //获取对应cate_id的文章列表和未归档（cate_id=0）的文章列表
     else {
         const sql = `select * from ev_articles where is_delete=0 and state='发布' and cate_id=${className} order by Id asc limit ${begin},${limit}`
         db.query(sql, (err, results) => {

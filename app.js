@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: false }))
 //托管静态资源
 app.use('/blog/api/uploads', express.static('./uploads'))
 
+app.use('/blog/api/visitor_pic', express.static('./visitor_pic'))
 
 app.use(bodyParser.json());
 
