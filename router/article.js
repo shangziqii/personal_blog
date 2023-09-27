@@ -3,7 +3,7 @@ const express = require('express');
 // 创建路由对象
 const router = express.Router();
 
-const { addArticle, getArticle, getText, getArticleTotal } = require('./../router_function/article_function')
+const { addArticle, getArticle, getText, getArticleTotal, getTextList } = require('./../router_function/article_function')
 
 const expressJoi = require('@escook/express-joi');
 
@@ -31,6 +31,9 @@ router.get('/blog/getText', getText)
 
 //获取对应类别文章个数的接口
 router.get('/blog/getArticleTotal', getArticleTotal)
+
+//根据关键字获取对应文章列表
+router.post('/blog/getTextList', getTextList)
 
 //向外暴露
 module.exports = router

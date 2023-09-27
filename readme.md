@@ -72,6 +72,10 @@ login（登录）
 
 - //comment/publish 发送评论
 
+### 根据关键字获取对应文章列表
+- 请求方式post,请求接口地址：/blog/getTextList
+- 获取值为value:string值
+
 `<ReactMarkdown>{content ? content : 'no...'}</ReactMarkdown>`
 
   

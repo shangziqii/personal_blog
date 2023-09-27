@@ -127,3 +127,19 @@ exports.getArticleTotal = (req, res) => {
         })
     }
 }
+
+
+//title搜索框进行筛选（可以后续修改删除条件）
+exports.getTextList = (req, res) => {
+    const value = req.body.value
+    const sql = 'select * from ev_articles where is_delete=0 and state="发布" and title like ?'
+    const queryValue = '%' + value + '%'
+    db.query(sql, queryValue, (err, results) => {
+        if (err) return res.cc('未知错误，请稍后再试！')
+        else return res.send({
+            status: 0,
+            msg: '获取数据成功！',
+            results
+        })
+    })
+}
