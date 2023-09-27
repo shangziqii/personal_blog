@@ -11,7 +11,11 @@ import { Calendar, Col, Radio, Row, Select, Typography, theme } from 'antd';
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar';
 
 import './index.scss'
-import { artcate, getRole, getTotal } from './api';
+import { artcate, getRole, getTotal, getTextListApi } from './api';
+
+//组件引入
+import SearchList from './../../components/SearchList'
+
 dayjs.extend(dayLocaleData);
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -24,6 +28,8 @@ interface MyProps {
 //首页顶部
 function Top({ isLogin }: MyProps) {
     const navigate = useNavigate();
+    const [showFlag, setShowFlag] = useState(false)
+    const [searchInput, setSearchInput] = useState([])
     function onSearch() {
 
     }
@@ -31,13 +37,38 @@ function Top({ isLogin }: MyProps) {
         navigate('/login');
     }
     function personal() {
-        navigate('/personal');
+        navigate('/home');
+    }
+    function getTextList(event: any) {
+        console.log('调用');
+
+        setShowFlag(false)
+        const value = event.target.value
+        if (value) {
+            getTextListApi(value).then(({ data }) => {
+                if (data.results.length > 0) {
+                    setShowFlag(true)
+                    setSearchInput(data.results)
+                }
+
+            }).catch(() => {
+                console.log('未知错误，请稍后再试！');
+            })
+        }
     }
 
     return (
         <>
             <div className="right">
-                <Search placeholder="input search text" onSearch={onSearch} style={{ width: 300 }} className='searchInput' />
+                <Search placeholder="input search text" onSearch={onSearch} style={{ width: 300 }} className='searchInput' onChange={getTextList} allowClear />
+                {
+                    showFlag ?
+                        <div className='searchListStyle'>
+                            <SearchList data={searchInput} />
+                        </div>
+                        :
+                        <></>
+                }
                 {
                     isLogin ?
                         <Button type="dashed" className='loginBtnStyle' onClick={personal}>个人中心</Button>
@@ -331,7 +362,7 @@ function Body() {
                                 // key: id,
                                 // key: item.className,
                                 // key: item.className,
-                                disabled: i === 28,
+                                // disabled: i === 28,
                                 children: <Text activeTabKey={activeTabKey} clearData={clearData} setClearData={setClearData} total={total} setTotal={setTotal} />
                             };
                         })

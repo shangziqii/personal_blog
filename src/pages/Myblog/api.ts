@@ -13,3 +13,9 @@ export const getRole = () => {
 export const getTotal = (className: string) => {
     return axios.get(`/api/blog/getArticleTotal?className=${className}`)
 }
+
+export const getTextListApi = (value: string) => {
+    return axios.post('/api/blog/getTextList', {
+        value
+    })
+}

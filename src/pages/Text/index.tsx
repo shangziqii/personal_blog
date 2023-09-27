@@ -70,7 +70,8 @@ interface DataType {
     name: string,
     pic: string,
     time: string,
-    comment: string
+    comment: string,
+    role: number
 }
 const RightContent: React.FC<MyProps> = ({ indexContent, textId, role }) => {
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -151,28 +152,40 @@ const RightContent: React.FC<MyProps> = ({ indexContent, textId, role }) => {
                     <InfiniteScroll
                         dataLength={data.length}
                         next={loadMoreData}
-                        hasMore={data.length != data.length}
+                        hasMore={data.length !== data.length}
                         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                         endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                         scrollableTarget="scrollableDiv"
                     >
                         <List
+                            className='itemStyle'
                             dataSource={data}
                             renderItem={(item) => (
                                 <List.Item key={item.name}>
                                     <List.Item.Meta
-                                        avatar={<Avatar src={item.pic} />}
-                                        title={<a href="https://ant.design">{item.time}</a>}
-                                        description={<div><div>{item.name}</div><div>{item.comment}</div></div>}
+                                        avatar={<Avatar src={`/api//blog/api/visitor_pic/${item.pic}`} />}
+                                        title={<div className='itemTopStyle'><span className={item.role === 0 ? 'guanliyuan' : 'youke'}>{item.name}</span>
+                                            {/*    <span>
+                                                {
+                                                    item.role === 0 ? '*' : ''
+                                                }
+                                            </span> */}
+                                            <span>
+                                                {item.time.slice(0, 16)}
+                                            </span>
+                                        </div>}
+                                        // <a href="https://ant.design">{item.time}</a>
+                                        description={<div className='commentStyle'>{item.comment}</div>}
                                     />
-                                    <div>Content</div>
+                                    {/* <div>{item.time.slice(0, 16)}</div> */}
                                 </List.Item>
                             )}
                         />
                     </InfiniteScroll>
                 </div>
             </div>
-            <TextArea id="my-input" placeholder="请输入你的想法！" allowClear onChange={onChange} />
+
+            <TextArea id="my-input" placeholder="请输入你的想法！" allowClear onChange={onChange} value={inputValue} />
             <Button onClick={publishComment}>send</Button>
         </>
     )
@@ -180,7 +193,7 @@ const RightContent: React.FC<MyProps> = ({ indexContent, textId, role }) => {
 
 const App: React.FC = () => {
     const loadsql = "正在加载中..."
-    const [textInfo, setTextInfo] = useState({ title: loadsql, cate_id: 0, content: loadsql, indexContent: loadsql, pub_date: loadsql })
+    const [textInfo, setTextInfo] = useState({ title: loadsql, cate_id: -1, content: loadsql, indexContent: loadsql, pub_date: loadsql })
     const [textClass, setTextClass] = useState('loading')
     const [role, setRole] = useState<number>(1)
     const params = useParams();

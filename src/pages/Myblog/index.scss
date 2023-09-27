@@ -97,3 +97,14 @@
     height: 10vh;
     background-color: #b0b0b0;
 }
+
+.searchListStyle {
+    width: 500px;
+    padding-left: 10px;
+    max-height: 200px;
+    background-color: rgb(255, 234, 234);
+    position: absolute;
+    z-index: 999;
+    top: 8vh;
+    overflow-y: scroll;
+}

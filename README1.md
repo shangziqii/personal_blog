@@ -44,9 +44,3 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-
-
-
-# 家人们谁懂啊！！！！！！！！！
-## 困了好多天的问题，居然是出在切换tabs过程中，丢失了盒子的高度导致，滑动的页面无法判断是否到底，然后无法调用函数导致，人家total早就改掉了数据的！！！！！

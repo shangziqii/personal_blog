@@ -50,7 +50,7 @@ const App: React.FC = () => {
             key: 'x',
             render: (record) => <>
                 <Button onClick={() => changeFunc(record)}>Change</Button>
-                <Button onClick={() => deleteFunc(record)}>Delete</Button>
+                <Button onClick={() => deleteFunc(record)} v-show={false}>Delete</Button>
             </>,
         },
     ];

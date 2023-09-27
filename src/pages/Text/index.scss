@@ -76,3 +76,27 @@
         }
     }
 }
+
+// 评论区item样式
+.itemStyle {
+    .itemTopStyle {
+        display: flex;
+        justify-content: space-between;
+
+        .guanliyuan {
+            background-color: greenyellow;
+        }
+
+        .youke {
+            // background-color: green;
+        }
+    }
+
+    .commentStyle {
+        background-color: rgb(255, 241, 223);
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+}
