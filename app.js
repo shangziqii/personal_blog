@@ -4,6 +4,10 @@ const expressJWT = require('express-jwt');
 
 const bodyParser = require('body-parser');
 
+//webscoket
+const WebScoketServer = require('./webscoketServer')
+WebScoketServer.start()
+
 const app = express();
 
 //解决跨域问题
@@ -36,17 +40,19 @@ app.use((req, res, next) => {
 app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/blog\//] }));
 const joi = require('joi');
 
-// 导入并注册用户理由模块
+// 导入并注册用户路由模块
 const userRouter = require('./router/router');
 const artcate = require('./router/artcate');
 const articleRouter = require('./router/article');
 const userInfoRouter = require('./router/userinfo');
 const commentRouter = require('./router/comment');
+const clockInRouter = require('./router/clockIn');
 app.use(userRouter);
 app.use(artcate);
 app.use(articleRouter);
 app.use('/my', userInfoRouter);
 app.use('/blog', commentRouter);
+app.use('/blog', clockInRouter);
 //错误级中间件
 app.use(function (err, req, res, next) {
     //数据验证错误
@@ -59,6 +65,8 @@ app.use(function (err, req, res, next) {
 
     res.cc(err)
 })
+
+
 
 app.listen(80, () => {
     console.log('http://127.0.0.1');

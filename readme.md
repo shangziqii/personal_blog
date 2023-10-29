@@ -34,10 +34,7 @@ login（登录）
 这是因为后台缺少了解析json的中间件
 
 - 使用body-parser中间件来解析请求体
-  app.use(bodyParser.json());
-
-这里有一个问题:
-如果文章的类别已经删除(删除信号),那么新增文章类别是可以进行覆盖的吧?未解决
+- app.use(bodyParser.json());
 
 
 ## 接口信息：
@@ -48,7 +45,7 @@ login（登录）
 - /blog/addcates 新增文章分类 token
 - /blog/deleteCateById/:id 删除对应id的文章分类 token
 - /blog/cates/:id 根据id获取文章分类数据（一次性全部获取） 管理员获取 token（这里获取的文章为发布+草稿）
-- /blog/updatecate id+classname更换文章的类名（这里存在一个逻辑问题就是跟换名字时，如果是已经删除了的文章类名，应该是可以进行覆盖的？） token
+- /blog/updatecate id+classname更换文章的类名
 - /blog/getCate 根据id获取其对应的文章类名
 
 ### article.js（文章管理对应接口）
@@ -70,8 +67,6 @@ login（登录）
 
 ### comment.js（用户发送对应文章评论，前缀/blog）
 
-- //comment/publish 发送评论
-
-`<ReactMarkdown>{content ? content : 'no...'}</ReactMarkdown>`
+- /comment/publish 发送评论
 
   
