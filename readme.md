@@ -67,6 +67,4 @@ login（登录）
 
 ### comment.js（用户发送对应文章评论，前缀/blog）
 
-- /comment/publish 发送评论
-
-  
+- /comment/publish 发送评论。
