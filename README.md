@@ -12,6 +12,7 @@
 - 引入Ant Design
 - 使用react-router
 - 使用axios
+- 使用redux
 
 ## 启动项目
 
@@ -56,7 +57,7 @@ ts配置
   - 搜索模块（模糊搜索title值，可以添加indexContent进行筛选）
   - 登录/个人中心（首页进入判断token有效性选择展示）
 - Left
-  - 打卡模块（登录后，可以记录签到日期，并且每日可以进行留言）
+  - 打卡模块（登录后，可以记录签到日期）
 - Content
   - 左侧获取文章分类列表
   - 右侧展示选择分类对应的文章列表
@@ -66,7 +67,7 @@ ts配置
 - Top
   - 文章Title，分栏class，发表时间publish_time
 - right
-  - 文章评论区：在进入到text页面后，会同步判断token有效性，如果token有效role=0，评论为作者发表；token无效，role=1，评论为游客发表，头像从后台随机获取（token超时后，role未变化问题，可以设置定时发送更新role值）
+  - 文章评论区：在进入到text页面后，会同步判断token有效性，如果token有效role=0，评论为作者发表；token无效，role=1，评论为游客发表，头像从后台随机获取
 - content
   - index-content模块展示文章的主要内容，md格式展示文章内容。
 

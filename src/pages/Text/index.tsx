@@ -136,8 +136,6 @@ const RightContent: React.FC<MyProps> = ({ indexContent, textId, role }) => {
 
     return (
         <>
-            {/* <div>{indexContent}</div> */}
-            {/* <ReactMarkdown>{indexContent}</ReactMarkdown> */}
             <h2>comment area</h2>
             <div className='commentAreaAtyle'>
                 <div

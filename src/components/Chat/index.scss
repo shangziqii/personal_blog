@@ -1,0 +1,32 @@
+.chatBox {
+    width: 400px;
+    height: 400px;
+    background-color: skyblue;
+    margin: 10px;
+    border: 1px solid black;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    .box {
+        .sanjiao {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border: 10px solid;
+            border-color: transparent;
+        }
+
+        .showChatDiv {
+            display: inline-block;
+            padding: 10px;
+            margin: 5px 5px 5px 0;
+            width: 300px;
+        }
+    }
+
+}
+
+
+.inputSend {
+    margin-left: 260px;
+}

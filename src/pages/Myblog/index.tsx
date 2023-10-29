@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Space, Button, Input, Avatar, List, message, Skeleton, Divider, Tabs } from 'antd';
+import { Layout, Space, Button, Input, Avatar, List, message, Skeleton, Divider, Tabs, Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
-import type { Dayjs } from 'dayjs';
 import dayLocaleData from 'dayjs/plugin/localeData';
-import { Calendar, Col, Radio, Row, Select, Typography, theme } from 'antd';
-import type { CalendarMode } from 'antd/es/calendar/generateCalendar';
-
 import './index.scss'
 import { artcate, getRole, getTotal, getTextListApi } from './api';
 
+
 //组件引入
 import SearchList from './../../components/SearchList'
+import ClockIn from './../../components/ClockIn'
+import Chat from './../../components/Chat'
 
 dayjs.extend(dayLocaleData);
 
@@ -39,9 +38,18 @@ function Top({ isLogin }: MyProps) {
     function personal() {
         navigate('/home');
     }
-    function getTextList(event: any) {
-        console.log('调用');
+    function debounce(func: any, delay: number) {
+        let timer: ReturnType<typeof setTimeout> | null;
+        return (...args: any[]) => {
+            console.log(timer);
 
+            clearTimeout(timer!);
+            timer = setTimeout(() => {
+                func(...args);
+            }, delay);
+        };
+    }
+    function getTextList(event: any) {
         setShowFlag(false)
         const value = event.target.value
         if (value) {
@@ -57,10 +65,14 @@ function Top({ isLogin }: MyProps) {
         }
     }
 
+    const debouncedHandleClick = debounce((event: any) => {
+        getTextList(event);
+    }, 500);
+
     return (
         <>
             <div className="right">
-                <Search placeholder="input search text" onSearch={onSearch} style={{ width: 300 }} className='searchInput' onChange={getTextList} allowClear />
+                <Search placeholder="input search text" onSearch={onSearch} style={{ width: 300 }} className='searchInput' onChange={debouncedHandleClick} allowClear />
                 {
                     showFlag ?
                         <div className='searchListStyle'>
@@ -80,110 +92,27 @@ function Top({ isLogin }: MyProps) {
     )
 }
 
-//首页左边框
+//首页左边框(引入组件ClockIn)
 const Left: React.FC = () => {
-    const { token } = theme.useToken();
-
-    const onPanelChange = (value: Dayjs, mode: CalendarMode) => {
-        console.log(value.format('YYYY-MM-DD'), mode);
-    };
-
-    const wrapperStyle: React.CSSProperties = {
-        width: "100%",
-        border: `1px solid ${token.colorBorderSecondary}`,
-        borderRadius: token.borderRadiusLG,
-    };
-
+    const [isModalOpen, setIsModelOpen] = useState(false)
+    const showModel = () => {
+        setIsModelOpen(true)
+    }
+    const handleok = () => {
+        setIsModelOpen(false)
+    }
+    const handleCancel = () => {
+        setIsModelOpen(false)
+    }
     return (
         <div className="leftStyle">
-            <div style={wrapperStyle}>
-                <Calendar
-                    fullscreen={false}
-                    headerRender={({ value, type, onChange, onTypeChange }) => {
-                        const start = 0;
-                        const end = 12;
-                        const monthOptions = [];
-
-                        let current = value.clone();
-                        const localeData = value.localeData();
-                        const months = [];
-                        for (let i = 0; i < 12; i++) {
-                            current = current.month(i);
-                            months.push(localeData.monthsShort(current));
-                        }
-
-                        for (let i = start; i < end; i++) {
-                            monthOptions.push(
-                                <Select.Option key={i} value={i} className="month-item">
-                                    {months[i]}
-                                </Select.Option>,
-                            );
-                        }
-
-                        const year = value.year();
-                        const month = value.month();
-                        const options = [];
-                        for (let i = year - 10; i < year + 10; i += 1) {
-                            options.push(
-                                <Select.Option key={i} value={i} className="year-item">
-                                    {i}
-                                </Select.Option>,
-                            );
-                        }
-                        return (
-                            <div style={{ padding: 8 }} >
-                                <Typography.Title level={4}>Custom header</Typography.Title>
-                                <Row gutter={8} >
-                                    <Col>
-                                        <Radio.Group
-                                            size="small"
-                                            onChange={(e) => onTypeChange(e.target.value)}
-                                            value={type}
-                                        >
-                                            <Radio.Button value="month">Month</Radio.Button>
-                                            <Radio.Button value="year">Year</Radio.Button>
-                                        </Radio.Group>
-                                    </Col>
-                                    <Col>
-                                        <Select
-                                            size="small"
-                                            dropdownMatchSelectWidth={false}
-                                            className="my-year-select"
-                                            value={year}
-                                            onChange={(newYear) => {
-                                                const now = value.clone().year(newYear);
-                                                onChange(now);
-                                            }}
-                                        >
-                                            {options}
-                                        </Select>
-                                    </Col>
-                                    <Col>
-                                        <Select
-                                            size="small"
-                                            dropdownMatchSelectWidth={false}
-                                            value={month}
-                                            onChange={(newMonth) => {
-                                                const now = value.clone().month(newMonth);
-                                                onChange(now);
-                                            }}
-                                        >
-                                            {monthOptions}
-                                        </Select>
-                                    </Col>
-                                </Row>
-                            </div>
-                        );
-                    }}
-                    onPanelChange={onPanelChange}
-                />
-            </div>
-            <Button type="dashed" ghost className='pushBtn'>
-                打卡！
-            </Button>
+            <ClockIn></ClockIn>
+            <Button onClick={showModel}>Chat</Button>
+            <Modal title='Basic Modal' open={isModalOpen} onOk={handleok} onCancel={handleCancel}>
+                <Chat></Chat>
+            </Modal>
         </div>
     );
-
 };
 
 
@@ -230,7 +159,6 @@ const Text: React.FC<TextProps> = ({ activeTabKey, clearData, setClearData, tota
                 setData([...data, ...body.data.articles]);
                 setTotal(body.data.total);
                 setLoading(false);
-
             })
             .catch(() => {
                 setLoading(false);
