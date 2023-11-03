@@ -16,7 +16,7 @@ exports.login = (req, res) => {
             return res.cc('密码错误，登陆失败');
         }
 
-        //登陆成功
+        //登陆成功..
         // 生成token字符串（该token字符串包括该用户的用户名和role）
         const user = { ...results[0], password: '' };
         const tokenStr = jwt.sign(user, config.jwtSecretKey, {
