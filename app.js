@@ -5,8 +5,8 @@ const expressJWT = require('express-jwt');
 const bodyParser = require('body-parser');
 
 //webscoket
-const WebScoketServer = require('./webscoketServer')
-WebScoketServer.start()
+const WebSocketServer = require('./websocketServer')
+WebSocketServer.start()
 
 const app = express();
 

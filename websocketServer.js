@@ -1,8 +1,8 @@
-const WebScoket = require('ws');
+const WebSocket = require('ws');
 
 function start() {
-    //创建WebScoket服务器实例，并监听8080端口
-    const wss = new WebScoket.Server({ port: 8080 })
+    //创建WebSocket服务器实例，并监听8080端口
+    const wss = new WebSocket.Server({ port: 8080 })
 
     //监听连接事件
     // 当建立连接，触发connection事件
@@ -14,7 +14,7 @@ function start() {
             //广播消息给所有连接的客户端
             // 循环遍历所有连接的客户端
             wss.clients.forEach((client) => {
-                if (client.readyState === WebScoket.OPEN) {
+                if (client.readyState === WebSocket.OPEN) {
                     client.send(message.toString());
                 }
             })
@@ -24,7 +24,7 @@ function start() {
             console.log('连接已断开');
         })
     });
-    console.log('WebScoket服务器已启动');
+    console.log('WebSocket服务器已启动');
 }
 
 
