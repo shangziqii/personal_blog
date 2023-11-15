@@ -193,6 +193,7 @@ const Text: React.FC<TextProps> = ({ activeTabKey, clearData, setClearData, tota
                     overflow: 'hidden',
                     padding: '0 16px',
                     border: '1px solid rgba(140, 140, 140, 0.35)',
+                    // backgroundColor: 'black'
                 }}
             >
                 {/* 使用该组件实现无限滚动加载更多数据 */}
@@ -203,6 +204,7 @@ const Text: React.FC<TextProps> = ({ activeTabKey, clearData, setClearData, tota
                     loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                     endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                     scrollableTarget="scrollableDiv"
+                    style={{ backgroundColor: 'pink' }}
                     height={"75vh"}
                 >
                     <List

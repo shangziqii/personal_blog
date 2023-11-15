@@ -7,6 +7,7 @@ import { getTextApi, getTextClassApi, publishApi, getCommentApi } from './api'
 import ReactMarkdown from 'react-markdown';
 //判断用户身份
 import { getTokentf } from './../../api/index'
+// import MyEditor from './../../components/Editor'
 
 const { Header, Footer, Sider, Content } = Layout;
 const { TextArea } = Input;
@@ -50,6 +51,7 @@ const Body: React.FC<MyProps> = ({ content, indexContent }) => {
 
                 <ReactMarkdown>{content ? content : 'no...'}</ReactMarkdown>
             </div>
+            {/* <MyEditor /> */}
         </>
     )
 }

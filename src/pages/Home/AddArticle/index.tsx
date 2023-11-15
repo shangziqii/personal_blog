@@ -1,6 +1,7 @@
 import { useState } from "react"
 import ReactMarkdown from "react-markdown"
 import TextareaAutosize from 'react-textarea-autosize'
+import Editor from "./../../../components/Editor"
 //发布新文章
 function AddArticle() {
     /*     function addArticleFunc() {
@@ -35,6 +36,7 @@ function AddArticle() {
                 <input type="text" name="cate_id" placeholder="所属文章类别" />
                 <button type="submit">提交</button>
             </form>
+            <Editor />
         </>
     )
 }
